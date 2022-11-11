@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="RecipesApplicationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-11T07:11:21" hostname="DESKTOP-KRM8ORQ" time="2.899">
+  <properties/>
+  <testcase name="start" classname="RecipesApplicationTest" time="2.899"/>
+  <system-out><![CDATA[?[1;31m
+Start test 1?[0m
+?[0;34m
+?[0m?[0;34m  .   ____          _            __ _ _
+?[0m?[0;34m /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+?[0m?[0;34m( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+?[0m?[0;34m \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+?[0m?[0;34m  '  |____| .__|_| |_|_| |_\__, | / / / /
+?[0m?[0;34m =========|_|==============|___/=/_/_/_/
+?[0m?[0;34m :: Spring Boot ::                (v2.5.6)
+?[0m?[0;34m
+?[0m?[0;34m2022-11-11 08:11:21.825  INFO 30000 --- [    Test worker] recipes.RecipesApplication               : Starting RecipesApplication using Java 17.0.1 on DESKTOP-KRM8ORQ with PID 30000 (started by Damian in E:\Damian\Projects\SoftServe\Internal\Recipes\Recipes\task)
+?[0m?[0;34m2022-11-11 08:11:21.828  INFO 30000 --- [    Test worker] recipes.RecipesApplication               : No active profile set, falling back to default profiles: default
+?[0m?[0;34m2022-11-11 08:11:22.905  INFO 30000 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8881 (http)
+?[0m?[0;34m2022-11-11 08:11:22.917  INFO 30000 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+?[0m?[0;34m2022-11-11 08:11:22.918  INFO 30000 --- [    Test worker] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+?[0m?[0;34m2022-11-11 08:11:22.919  INFO 30000 --- [    Test worker] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.32] using APR version [1.7.0].
+?[0m?[0;34m2022-11-11 08:11:22.920  INFO 30000 --- [    Test worker] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+?[0m?[0;34m2022-11-11 08:11:22.920  INFO 30000 --- [    Test worker] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+?[0m?[0;34m2022-11-11 08:11:22.924  INFO 30000 --- [    Test worker] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1n  15 Mar 2022]
+?[0m?[0;34m2022-11-11 08:11:23.023  INFO 30000 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+?[0m?[0;34m2022-11-11 08:11:23.023  INFO 30000 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1163 ms
+?[0m?[0;34m2022-11-11 08:11:23.603  INFO 30000 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+?[0m?[0;34m2022-11-11 08:11:23.640  INFO 30000 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8881 (http) with context path ''
+?[0m?[0;34m2022-11-11 08:11:23.654  INFO 30000 --- [    Test worker] recipes.RecipesApplication               : Started RecipesApplication in 2.163 seconds (JVM running for 2.81)
+?[0;34m2022-11-11 08:11:23.917  INFO 30000 --- [nio-8881-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+?[0m?[0;34m2022-11-11 08:11:23.918  INFO 30000 --- [nio-8881-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+?[0m?[0;34m2022-11-11 08:11:23.919  INFO 30000 --- [nio-8881-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+?[0m?[0;34m2022-11-11 08:11:23.976  WARN 30000 --- [nio-8881-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Failure in @ExceptionHandler recipes.controller.RecipeController#errorHandler(RuntimeException)
+?[0m?[0;34m
+?[0m?[0;34morg.springframework.web.HttpMediaTypeNotAcceptableException: Could not find acceptable representation
+?[0m?[0;34m	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:315) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.handleReturnValue(RequestResponseBodyMethodProcessor.java:183) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:135) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver.doResolveHandlerMethodException(ExceptionHandlerExceptionResolver.java:428) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.handler.AbstractHandlerMethodExceptionResolver.doResolveException(AbstractHandlerMethodExceptionResolver.java:75) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver.resolveException(AbstractHandlerExceptionResolver.java:142) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.handler.HandlerExceptionResolverComposite.resolveException(HandlerExceptionResolverComposite.java:80) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.DispatcherServlet.processHandlerException(DispatcherServlet.java:1327) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1138) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1084) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+?[0m?[0;34m	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+?[0m?[0;34m	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.lambda$execute$0(SecurityUtil.java:280) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712) ~[na:na]
+?[0m?[0;34m	at java.base/javax.security.auth.Subject.doAsPrivileged(Subject.java:584) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:311) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:170) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:221) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.lambda$doFilter$0(ApplicationFilterChain.java:145) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:143) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+?[0m?[0;34m	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.lambda$execute$0(SecurityUtil.java:280) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712) ~[na:na]
+?[0m?[0;34m	at java.base/javax.security.auth.Subject.doAsPrivileged(Subject.java:584) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:311) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:253) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:187) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.lambda$doFilter$0(ApplicationFilterChain.java:145) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:143) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+?[0m?[0;34m	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.lambda$execute$0(SecurityUtil.java:280) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712) ~[na:na]
+?[0m?[0;34m	at java.base/javax.security.auth.Subject.doAsPrivileged(Subject.java:584) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:311) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:253) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:187) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.lambda$doFilter$0(ApplicationFilterChain.java:145) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:143) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+?[0m?[0;34m	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.lambda$execute$0(SecurityUtil.java:280) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712) ~[na:na]
+?[0m?[0;34m	at java.base/javax.security.auth.Subject.doAsPrivileged(Subject.java:584) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:311) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:253) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:187) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.lambda$doFilter$0(ApplicationFilterChain.java:145) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:143) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.6.jar:2.5.6]
+?[0m?[0;34m	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+?[0m?[0;34m	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.lambda$execute$0(SecurityUtil.java:280) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712) ~[na:na]
+?[0m?[0;34m	at java.base/javax.security.auth.Subject.doAsPrivileged(Subject.java:584) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:311) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:253) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:187) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.lambda$doFilter$0(ApplicationFilterChain.java:145) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:143) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+?[0m?[0;34m	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+?[0m?[0;34m	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.lambda$execute$0(SecurityUtil.java:280) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712) ~[na:na]
+?[0m?[0;34m	at java.base/javax.security.auth.Subject.doAsPrivileged(Subject.java:584) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:311) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:253) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:187) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.lambda$doFilter$0(ApplicationFilterChain.java:145) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+?[0m?[0;34m	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:143) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+?[0m?[0;34m	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+?[0m?[0;34m
+?[0m?[1;31m
+Start test 2?[0m
+?[1;31m
+Start test 3?[0m
+?[1;31m
+Start test 4?[0m
+?[1;31m
+Start test 5?[0m
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
