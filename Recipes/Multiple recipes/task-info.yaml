@@ -193,6 +193,118 @@ files:
         }
     }
   learner_created: false
+- name: src/recipes/model/ErrorDto.java
+  visible: true
+  text: |
+    package recipes.model;
+
+    public class ErrorDto {
+        String error;
+        public ErrorDto(String error) {
+            this.error = error;
+        }
+    }
+  learner_created: true
+- name: src/recipes/controller/RecipeController.java
+  visible: true
+  text: |
+    package recipes.controller;
+
+    import lombok.AllArgsConstructor;
+    import lombok.extern.slf4j.Slf4j;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.web.bind.annotation.*;
+    import recipes.model.ErrorDto;
+    import recipes.model.Recipe;
+    import recipes.service.RecipeService;
+
+    @Slf4j
+    @RestController
+    @AllArgsConstructor
+    public class RecipeController {
+
+        RecipeService recipeService;
+
+        @PostMapping("/api/recipe")
+        @ResponseStatus(HttpStatus.OK)
+        Recipe addRecipe(@RequestBody Recipe recipe){
+            Recipe recipeResult = recipeService.addRecipe(recipe);
+            log.info("{}",recipeResult);
+            return recipeResult;
+        }
+
+
+        @GetMapping("/api/recipe")
+        Recipe getRecipe(){
+            return recipeService.getRecipe();
+        }
+
+        @ExceptionHandler(RuntimeException.class)
+        @ResponseStatus(HttpStatus.BAD_REQUEST)
+        ErrorDto errorHandler(RuntimeException ex){
+            return new ErrorDto(ex.getMessage());
+        }
+    }
+  learner_created: true
+- name: src/recipes/service/RecipeService.java
+  visible: true
+  text: |
+    package recipes.service;
+
+    import org.springframework.stereotype.Service;
+    import recipes.model.Recipe;
+
+    @Service
+    public class RecipeService {
+
+        Recipe recipe;
+        public Recipe addRecipe(Recipe recipe) {
+            this.recipe = recipe;
+            return recipe;
+        }
+
+        public Recipe getRecipe() {
+            return this.recipe;
+        }
+    }
+  learner_created: true
+- name: src/recipes/model/Recipe.java
+  visible: true
+  text: |
+    package recipes.model;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    public class Recipe {
+        String name;
+        String description;
+        String ingredients;
+        String directions;
+    }
+  learner_created: true
+- name: src/recipes/model/request/RecipeRequest.java
+  visible: true
+  learner_created: true
+- name: src/recipes/repository/RecipeRepository.java
+  visible: true
+  learner_created: true
+- name: src/recipes/exceptions/NotFoundRecipeException.java
+  visible: true
+  learner_created: true
+- name: src/recipes/model/response/RecipeResponse.java
+  visible: true
+  learner_created: true
+- name: src/recipes/model/response/IdResponse.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13089#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Fri, 11 Nov 2022 07:11:24 UTC"
+record: 2

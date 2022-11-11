@@ -308,6 +308,199 @@ files:
         }
     }
   learner_created: false
+- name: src/recipes/model/request/RecipeRequest.java
+  visible: true
+  text: |
+    package recipes.model.request;
+
+    import lombok.Value;
+
+    import java.util.List;
+
+    @Value
+    public class RecipeRequest {
+        String name;
+        String description;
+        List<String> ingredients;
+        List<String> directions;
+    }
+  learner_created: true
+- name: src/recipes/model/response/IdResponse.java
+  visible: true
+  text: |
+    package recipes.model.response;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+
+    @Data
+    @AllArgsConstructor
+    public class IdResponse {
+        Long id;
+    }
+  learner_created: true
+- name: src/recipes/controller/RecipeController.java
+  visible: true
+  text: |
+    package recipes.controller;
+
+    import lombok.AllArgsConstructor;
+    import lombok.extern.slf4j.Slf4j;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.web.bind.annotation.*;
+    import recipes.exceptions.NotFoundRecipeException;
+    import recipes.model.ErrorDto;
+    import recipes.model.request.RecipeRequest;
+    import recipes.model.response.IdResponse;
+    import recipes.model.response.RecipeResponse;
+    import recipes.service.RecipeService;
+
+    @Slf4j
+    @RestController
+    @AllArgsConstructor
+    public class RecipeController {
+
+        RecipeService recipeService;
+
+        @PostMapping("/api/recipe/new")
+        IdResponse addRecipe(@RequestBody RecipeRequest recipeRequest){
+            return recipeService.saveRecipe(recipeRequest);
+        }
+
+
+        @GetMapping("/api/recipe/{id}")
+        RecipeResponse getRecipeById(@PathVariable("id") Long id){
+            return recipeService.getRecipeById(id).orElseThrow(NotFoundRecipeException::new);
+        }
+
+        @ExceptionHandler(RuntimeException.class)
+        @ResponseStatus(HttpStatus.BAD_REQUEST)
+        ErrorDto errorHandler(RuntimeException ex){
+            return new ErrorDto(ex.getMessage());
+        }
+    }
+  learner_created: true
+- name: src/recipes/service/RecipeService.java
+  visible: true
+  text: |
+    package recipes.service;
+
+    import lombok.AllArgsConstructor;
+    import org.springframework.stereotype.Service;
+    import recipes.model.Recipe;
+    import recipes.model.request.RecipeRequest;
+    import recipes.model.response.IdResponse;
+    import recipes.repository.RecipeRepository;
+    import recipes.model.response.RecipeResponse;
+
+    import java.util.Optional;
+
+    @Service
+    @AllArgsConstructor
+    public class RecipeService {
+
+        RecipeRepository recipeRepository;
+        public IdResponse saveRecipe(RecipeRequest recipe) {
+            IdResponse id = new IdResponse(recipeRepository.save(recipe));
+            return id;
+        }
+
+        public Optional<RecipeResponse> getRecipeById(Long id) {
+
+            return recipeRepository.getById(id);
+        }
+    }
+  learner_created: true
+- name: src/recipes/repository/RecipeRepository.java
+  visible: true
+  text: |
+    package recipes.repository;
+
+    import org.springframework.stereotype.Repository;
+    import recipes.model.Recipe;
+    import recipes.model.request.RecipeRequest;
+    import recipes.model.response.RecipeResponse;
+
+    import java.util.*;
+
+    @Repository
+    public class RecipeRepository {
+        Map<Long,Recipe> recipes = new HashMap<>();
+        public Long save(RecipeRequest recipeRequest) {
+            Recipe recipe = new Recipe(generatedId(), recipeRequest.getName(), recipeRequest.getDescription() , recipeRequest.getIngredients(),recipeRequest.getDirections());
+            recipes.put(recipe.getId(), recipe);
+            return recipe.getId();
+        }
+
+        public long generatedId(){
+            return recipes.size();
+        }
+
+        public Optional<RecipeResponse> getById(Long id) {
+            Recipe recipe = recipes.get(id);
+            if (recipe == null) {
+                return Optional.empty();
+            }
+            RecipeResponse recipeResponse = new RecipeResponse(recipe.getName(), recipe.getDescription(), recipe.getIngredients(), recipe.getDirections());
+            return Optional.of(recipeResponse);
+        }
+    }
+  learner_created: true
+- name: src/recipes/model/response/RecipeResponse.java
+  visible: true
+  text: |
+    package recipes.model.response;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+
+    import java.util.List;
+
+    @Data
+    @AllArgsConstructor
+    public class RecipeResponse {
+        String name;
+        String description;
+        List<String> ingredients;
+        List<String> directions;
+    }
+  learner_created: true
+- name: src/recipes/model/Recipe.java
+  visible: true
+  text: |
+    package recipes.model;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
+
+    import java.util.List;
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    public class Recipe {
+        Long id;
+        String name;
+        String description;
+        List<String> ingredients;
+        List<String> directions;
+    }
+  learner_created: true
+- name: src/recipes/exceptions/NotFoundRecipeException.java
+  visible: true
+  text: |
+    package recipes.exceptions;
+
+    import org.springframework.http.HttpStatus;
+    import org.springframework.web.server.ResponseStatusException;
+
+    public class NotFoundRecipeException extends ResponseStatusException {
+        public NotFoundRecipeException() {
+            super(HttpStatus.NOT_FOUND);
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13090#comment
 status: Unchecked
-record: -1
+record: 3
