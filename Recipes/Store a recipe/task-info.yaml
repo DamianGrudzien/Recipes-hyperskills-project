@@ -15,13 +15,6 @@ files:
         }
     }
   learner_created: false
-- name: src/resources/application.properties
-  visible: true
-  text: |-
-    server.port=8881
-    management.endpoints.web.exposure.include=*
-    management.endpoint.shutdown.enabled=true
-  learner_created: false
 - name: build.gradle
   visible: true
   text: |-
@@ -308,24 +301,7 @@ files:
         }
     }
   learner_created: false
-- name: src/recipes/model/request/RecipeRequest.java
-  visible: true
-  text: |
-    package recipes.model.request;
-
-    import lombok.Value;
-
-    import java.util.List;
-
-    @Value
-    public class RecipeRequest {
-        String name;
-        String description;
-        List<String> ingredients;
-        List<String> directions;
-    }
-  learner_created: true
-- name: src/recipes/model/response/IdResponse.java
+- name: src/recipes/model/response/RecipeResponse.java
   visible: true
   text: |
     package recipes.model.response;
@@ -333,10 +309,37 @@ files:
     import lombok.AllArgsConstructor;
     import lombok.Data;
 
+    import java.util.List;
+
     @Data
     @AllArgsConstructor
-    public class IdResponse {
+    public class RecipeResponse {
+        String name;
+        String description;
+        List<String> ingredients;
+        List<String> directions;
+    }
+  learner_created: true
+- name: src/recipes/model/Recipe.java
+  visible: true
+  text: |
+    package recipes.model;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
+
+    import java.util.List;
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    public class Recipe {
         Long id;
+        String name;
+        String description;
+        List<String> ingredients;
+        List<String> directions;
     }
   learner_created: true
 - name: src/recipes/controller/RecipeController.java
@@ -380,35 +383,18 @@ files:
         }
     }
   learner_created: true
-- name: src/recipes/service/RecipeService.java
+- name: src/recipes/model/response/IdResponse.java
   visible: true
   text: |
-    package recipes.service;
+    package recipes.model.response;
 
     import lombok.AllArgsConstructor;
-    import org.springframework.stereotype.Service;
-    import recipes.model.Recipe;
-    import recipes.model.request.RecipeRequest;
-    import recipes.model.response.IdResponse;
-    import recipes.repository.RecipeRepository;
-    import recipes.model.response.RecipeResponse;
+    import lombok.Data;
 
-    import java.util.Optional;
-
-    @Service
+    @Data
     @AllArgsConstructor
-    public class RecipeService {
-
-        RecipeRepository recipeRepository;
-        public IdResponse saveRecipe(RecipeRequest recipe) {
-            IdResponse id = new IdResponse(recipeRepository.save(recipe));
-            return id;
-        }
-
-        public Optional<RecipeResponse> getRecipeById(Long id) {
-
-            return recipeRepository.getById(id);
-        }
+    public class IdResponse {
+        Long id;
     }
   learner_created: true
 - name: src/recipes/repository/RecipeRepository.java
@@ -446,61 +432,64 @@ files:
         }
     }
   learner_created: true
-- name: src/recipes/model/response/RecipeResponse.java
+- name: src/resources/application.properties
+  visible: true
+  text: |-
+    server.port=8881
+    management.endpoints.web.exposure.include=*
+    management.endpoint.shutdown.enabled=true
+  learner_created: false
+- name: src/recipes/model/request/RecipeRequest.java
   visible: true
   text: |
-    package recipes.model.response;
+    package recipes.model.request;
 
-    import lombok.AllArgsConstructor;
-    import lombok.Data;
+    import lombok.Value;
 
     import java.util.List;
 
-    @Data
-    @AllArgsConstructor
-    public class RecipeResponse {
+    @Value
+    public class RecipeRequest {
         String name;
         String description;
         List<String> ingredients;
         List<String> directions;
     }
   learner_created: true
-- name: src/recipes/model/Recipe.java
+- name: src/recipes/service/RecipeService.java
   visible: true
   text: |
-    package recipes.model;
+    package recipes.service;
 
     import lombok.AllArgsConstructor;
-    import lombok.Data;
-    import lombok.NoArgsConstructor;
+    import org.springframework.stereotype.Service;
+    import recipes.model.Recipe;
+    import recipes.model.request.RecipeRequest;
+    import recipes.model.response.IdResponse;
+    import recipes.repository.RecipeRepository;
+    import recipes.model.response.RecipeResponse;
 
-    import java.util.List;
+    import java.util.Optional;
 
+    @Service
     @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
-    public class Recipe {
-        Long id;
-        String name;
-        String description;
-        List<String> ingredients;
-        List<String> directions;
-    }
-  learner_created: true
-- name: src/recipes/exceptions/NotFoundRecipeException.java
-  visible: true
-  text: |
-    package recipes.exceptions;
+    public class RecipeService {
 
-    import org.springframework.http.HttpStatus;
-    import org.springframework.web.server.ResponseStatusException;
+        RecipeRepository recipeRepository;
+        public IdResponse saveRecipe(RecipeRequest recipe) {
+            IdResponse id = new IdResponse(recipeRepository.save(recipe));
+            return id;
+        }
 
-    public class NotFoundRecipeException extends ResponseStatusException {
-        public NotFoundRecipeException() {
-            super(HttpStatus.NOT_FOUND);
+        public Optional<RecipeResponse> getRecipeById(Long id) {
+
+            return recipeRepository.getById(id);
         }
     }
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13090#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Fri, 11 Nov 2022 16:25:32 UTC"
 record: 3
