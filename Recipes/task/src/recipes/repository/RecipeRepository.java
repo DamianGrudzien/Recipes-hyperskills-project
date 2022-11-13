@@ -13,4 +13,10 @@ public interface RecipeRepository extends JpaRepository<Recipe,Long> {
 
     boolean existsById(Long id);
 
+    List<Recipe> findByCategoryIgnoreCaseOrderByDateDesc(String category);
+
+    List<Recipe> findByNameContainsIgnoreCaseOrderByDateDesc(String name);
+
+
+
 }

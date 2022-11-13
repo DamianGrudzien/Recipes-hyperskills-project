@@ -4,7 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,9 +18,11 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    @NotNull
     String name;
     String description;
+    String category;
+    LocalDateTime date;
+
     @ElementCollection
     List<String> ingredients = new java.util.ArrayList<>();
     @ElementCollection
