@@ -1,57 +1,11 @@
 type: edu
 files:
-- name: src/recipes/RecipesApplication.java
-  visible: true
-  text: |
-    package recipes;
-
-    import org.springframework.boot.SpringApplication;
-    import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-    @SpringBootApplication
-    public class RecipesApplication {
-        public static void main(String[] args) {
-            SpringApplication.run(RecipesApplication.class, args);
-        }
-    }
-  learner_created: false
 - name: src/resources/application.properties
   visible: true
   text: |-
     server.port=8881
     management.endpoints.web.exposure.include=*
     management.endpoint.shutdown.enabled=true
-  learner_created: false
-- name: build.gradle
-  visible: true
-  text: |-
-    buildscript {
-        apply plugin: 'hyperskill'
-
-        repositories {
-            mavenCentral()
-        }
-        dependencies {
-            classpath "org.springframework.boot:spring-boot-gradle-plugin:$hs.spring.bootVersion"
-            classpath "io.spring.gradle:dependency-management-plugin:$hs.spring.dependencyManagementVersion"
-        }
-    }
-
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
-
-    repositories {
-        mavenCentral()
-    }
-
-    sourceSets.main.resources.srcDirs = ["src/resources"]
-
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-    }
   learner_created: false
 - name: test/RecipesApplicationTest.java
   visible: false
@@ -814,6 +768,400 @@ files:
         }
     }
   learner_created: false
+- name: src/recipes/model/request/RecipeRequest.java
+  visible: true
+  text: |
+    package recipes.model.request;
+
+    import com.fasterxml.jackson.annotation.JsonIgnore;
+    import lombok.*;
+    import recipes.model.Recipe;
+
+    import javax.validation.constraints.NotBlank;
+    import javax.validation.constraints.NotEmpty;
+    import javax.validation.constraints.NotNull;
+    import javax.validation.constraints.Size;
+    import java.time.LocalDateTime;
+    import java.util.List;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class RecipeRequest {
+        @NotNull
+        @NotBlank
+        @NotEmpty
+        String name;
+        @NotNull
+        @NotBlank
+        @NotEmpty
+        String description;
+        @NotNull
+        @NotBlank
+        @NotEmpty
+        String category;
+        LocalDateTime date;
+        @Size(min = 1)
+        @NotNull
+        List<String> ingredients;
+        @Size(min = 1)
+        @NotNull
+        List<String> directions;
+
+        @JsonIgnore
+        public static Recipe mapRecipe(RecipeRequest recipeRequest) {
+            Recipe recipe = new Recipe();
+            recipe.setDate(LocalDateTime.now());
+            recipe.setCategory(recipeRequest.getCategory());
+            recipe.setDescription(recipeRequest.getDescription());
+            recipe.setName(recipeRequest.getName());
+            recipe.setIngredients(recipeRequest.getIngredients());
+            recipe.setDirections(recipeRequest.getDirections());
+            return recipe;
+        }
+    }
+  learner_created: true
+- name: src/recipes/model/response/IdResponse.java
+  visible: true
+  text: |
+    package recipes.model.response;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+
+    @Data
+    @AllArgsConstructor
+    public class IdResponse {
+        Long id;
+    }
+  learner_created: true
+- name: src/recipes/service/RecipeService.java
+  visible: true
+  text: |
+    package recipes.service;
+
+    import lombok.AllArgsConstructor;
+    import org.springframework.stereotype.Service;
+    import recipes.model.Recipe;
+    import recipes.model.request.RecipeRequest;
+    import recipes.model.response.IdResponse;
+    import recipes.model.response.RecipeResponse;
+    import recipes.repository.RecipeRepository;
+    import recipes.util.MapperRecipe;
+
+    import java.util.List;
+    import java.util.Optional;
+    import java.util.stream.Collectors;
+
+    @Service
+    @AllArgsConstructor
+    public class RecipeService {
+
+        RecipeRepository recipeRepository;
+
+        public IdResponse saveRecipe(RecipeRequest recipe) {
+            Recipe recipeSaved = recipeRepository.save(RecipeRequest.mapRecipe(recipe));
+            return new IdResponse(recipeSaved.getId());
+        }
+
+        public Optional<RecipeResponse> getRecipeById(Long id) {
+            Optional<Recipe> recipeById = recipeRepository.findRecipeById(id);
+            if (recipeById.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.of(RecipeResponse.valueOf(recipeById.get()));
+        }
+
+        public boolean deleteRecipeById(Long id) {
+            recipeRepository.deleteById(id);
+            boolean exists = recipeRepository.existsById(id);
+            return exists;
+        }
+
+        public Optional<RecipeResponse> updateRecipeById(Long id, RecipeRequest recipeRequest) {
+            if (recipeRepository.existsById(id)) {
+                Recipe recipe = recipeRepository.getById(id);
+                MapperRecipe.updateRecipe(recipe, recipeRequest);
+                recipeRepository.save(recipe);
+                return Optional.of(RecipeResponse.valueOf(recipe));
+            } else {
+                return Optional.empty();
+            }
+        }
+
+        public List<RecipeResponse> getRecipesBy(String search, String searchValue) {
+            if (search.equals("category")) {
+                List<Recipe> categoryRecipes = recipeRepository.findByCategoryIgnoreCaseOrderByDateDesc(searchValue);
+                return categoryRecipes.stream()
+                                      .map(RecipeResponse::valueOf)
+                                      .collect(Collectors.toList());
+            } else {
+                List<Recipe> nameRecipes = recipeRepository.findByNameContainsIgnoreCaseOrderByDateDesc(searchValue);
+                return nameRecipes.stream()
+                                  .map(RecipeResponse::valueOf)
+                                  .collect(Collectors.toList());
+            }
+        }
+    }
+  learner_created: true
+- name: src/recipes/controller/RecipeController.java
+  visible: true
+  text: |
+    package recipes.controller;
+
+    import lombok.AllArgsConstructor;
+    import lombok.extern.slf4j.Slf4j;
+    import org.springframework.dao.EmptyResultDataAccessException;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.*;
+    import org.springframework.web.server.ResponseStatusException;
+    import recipes.model.request.RecipeRequest;
+    import recipes.model.response.IdResponse;
+    import recipes.model.response.RecipeResponse;
+    import recipes.service.RecipeService;
+
+    import javax.validation.Valid;
+    import java.util.List;
+
+    @Slf4j
+    @RestController
+    @AllArgsConstructor
+    public class RecipeController {
+
+        RecipeService recipeService;
+
+        @ExceptionHandler(EmptyResultDataAccessException.class)
+        @ResponseStatus(HttpStatus.NOT_FOUND)
+        public ResponseEntity<HttpStatus> handleException(RuntimeException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
+        @PostMapping("/api/recipe/new")
+        IdResponse addRecipe(@Valid @RequestBody RecipeRequest recipeRequest) {
+            return recipeService.saveRecipe(recipeRequest);
+        }
+
+        @GetMapping("/api/recipe/{id}")
+        RecipeResponse getRecipeById(@PathVariable("id") Long id) {
+            return recipeService.getRecipeById(id)
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        }
+
+        @DeleteMapping("/api/recipe/{id}")
+        ResponseEntity<HttpStatus> deleteRecipeById(@PathVariable("id") Long id) {
+            if (!recipeService.deleteRecipeById(id)) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        @PutMapping("/api/recipe/{id}")
+        ResponseEntity<RecipeResponse> updateRecipeById(@PathVariable("id") Long id,@Valid @RequestBody RecipeRequest recipeRequest) {
+            RecipeResponse recipeResponse = recipeService.updateRecipeById(id, recipeRequest)
+                                                         .orElseThrow(
+                                                                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            return new ResponseEntity<>(recipeResponse,HttpStatus.NO_CONTENT);
+        }
+
+        @GetMapping("/api/recipe/search")
+        @ResponseStatus(HttpStatus.OK)
+        List<RecipeResponse> getRecipesByCategoryOrName(@RequestParam(required = false) String category, @RequestParam(required = false) String name) {
+            if (category == null && name == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+            if (category != null) {
+                return recipeService.getRecipesBy("category", category);
+            } else {
+                return recipeService.getRecipesBy("name", name);
+            }
+        }
+
+
+    }
+  learner_created: true
+- name: src/recipes/repository/RecipeRepository.java
+  visible: true
+  text: |
+    package recipes.repository;
+
+    import org.springframework.data.jpa.repository.JpaRepository;
+    import org.springframework.stereotype.Repository;
+    import recipes.model.Recipe;
+
+    import java.util.*;
+
+    @Repository
+    public interface RecipeRepository extends JpaRepository<Recipe,Long> {
+        Optional<Recipe> findRecipeById(Long id);
+        void deleteById(Long id);
+
+        boolean existsById(Long id);
+
+        List<Recipe> findByCategoryIgnoreCaseOrderByDateDesc(String category);
+
+        List<Recipe> findByNameContainsIgnoreCaseOrderByDateDesc(String name);
+
+
+
+    }
+  learner_created: true
+- name: src/recipes/model/response/RecipeResponse.java
+  visible: true
+  text: |
+    package recipes.model.response;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Builder;
+    import lombok.Data;
+    import recipes.model.Recipe;
+
+    import java.time.LocalDateTime;
+    import java.util.List;
+
+    @Data
+    @AllArgsConstructor
+    @Builder
+    public class RecipeResponse {
+        String name;
+        String description;
+        String category;
+        LocalDateTime date;
+        List<String> ingredients;
+        List<String> directions;
+
+        public static RecipeResponse valueOf(Recipe recipe) {
+            return RecipeResponse.builder()
+                                 .name(recipe.getName())
+                                 .category(recipe.getCategory())
+                                 .date(recipe.getDate())
+                                 .description(recipe.getDescription())
+                                 .ingredients(recipe.getIngredients())
+                                 .directions(recipe.getDirections())
+                                 .build();
+        }
+    }
+  learner_created: true
+- name: src/recipes/util/MapperRecipe.java
+  visible: true
+  text: |
+    package recipes.util;
+
+    import recipes.model.Recipe;
+    import recipes.model.request.RecipeRequest;
+
+    import java.time.LocalDateTime;
+
+    public class MapperRecipe {
+        private MapperRecipe(){}
+        public static void updateRecipe(Recipe recipeDB,RecipeRequest recipeRequest) {
+            recipeDB.setName(recipeRequest.getName());
+            recipeDB.setDescription(recipeRequest.getDescription());
+            recipeDB.setCategory(recipeDB.getCategory());
+            recipeDB.setDate(LocalDateTime.now());
+            recipeDB.setIngredients(recipeRequest.getIngredients());
+            recipeDB.setDirections(recipeRequest.getDirections());
+        }
+    }
+  learner_created: true
+- name: src/recipes/model/Recipe.java
+  visible: true
+  text: |
+    package recipes.model;
+
+    import lombok.*;
+    import org.hibernate.Hibernate;
+
+    import javax.persistence.*;
+    import java.time.LocalDateTime;
+    import java.util.List;
+    import java.util.Objects;
+
+    @Entity
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @ToString
+    public class Recipe {
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        Long id;
+        String name;
+        String description;
+        String category;
+        LocalDateTime date;
+
+        @ElementCollection
+        List<String> ingredients = new java.util.ArrayList<>();
+        @ElementCollection
+        List<String> directions = new java.util.ArrayList<>();
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+                return false;
+            }
+            Recipe recipe = (Recipe) o;
+            return id != null && Objects.equals(id, recipe.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return getClass().hashCode();
+        }
+    }
+  learner_created: true
+- name: src/recipes/RecipesApplication.java
+  visible: true
+  text: |
+    package recipes;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class RecipesApplication {
+        public static void main(String[] args) {
+            SpringApplication.run(RecipesApplication.class, args);
+        }
+    }
+  learner_created: false
+- name: build.gradle
+  visible: true
+  text: |-
+    buildscript {
+        apply plugin: 'hyperskill'
+
+        repositories {
+            mavenCentral()
+        }
+        dependencies {
+            classpath "org.springframework.boot:spring-boot-gradle-plugin:$hs.spring.bootVersion"
+            classpath "io.spring.gradle:dependency-management-plugin:$hs.spring.dependencyManagementVersion"
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+    }
+  learner_created: false
 feedback_link: https://hyperskill.org/learn/step/13092#comment
 status: Unchecked
-record: -1
+record: 5
