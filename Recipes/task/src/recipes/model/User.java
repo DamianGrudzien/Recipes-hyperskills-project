@@ -2,32 +2,26 @@ package recipes.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Recipe {
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails, UserDetailMixin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    String name;
-    String description;
-    String category;
-    LocalDateTime date;
-    String author;
-
-    @ElementCollection
-    List<String> ingredients = new java.util.ArrayList<>();
-    @ElementCollection
-    List<String> directions = new java.util.ArrayList<>();
+    String email;
+    String password;
 
     @Override
     public boolean equals(Object o) {
@@ -37,12 +31,16 @@ public class Recipe {
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
             return false;
         }
-        Recipe recipe = (Recipe) o;
-        return id != null && Objects.equals(id, recipe.id);
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
     }
-
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getEmail();
     }
 }

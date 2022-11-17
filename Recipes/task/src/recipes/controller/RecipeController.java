@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import recipes.model.request.RecipeRequest;
+import recipes.model.request.UserRequest;
 import recipes.model.response.IdResponse;
 import recipes.model.response.RecipeResponse;
 import recipes.service.RecipeService;
+import recipes.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,11 +23,17 @@ import java.util.List;
 public class RecipeController {
 
     RecipeService recipeService;
+    UserService userService;
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<HttpStatus> handleException(RuntimeException ex) {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<HttpStatus> handleException() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @PostMapping("/api/register")
+    ResponseEntity<HttpStatus> registerUser(@Valid @RequestBody UserRequest userRequest) {
+        userService.register(userRequest).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
